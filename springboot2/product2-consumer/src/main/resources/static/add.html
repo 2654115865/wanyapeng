@@ -1,0 +1,277 @@
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../js/fileinput/css/fileinput.css" media="all"rel="stylesheet" type="text/css" />
+    <link href="../js/bootstrapvalidator/css/bootstrapValidator.min.css" rel="stylesheet">
+    <title>商品添加</title>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info"  name="brandDiv">
+                <div class="panel-heading">商品添加</div>
+                <form class="form-horizontal" id="addGoodsForm">
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">商品名：</label>
+                        <div class="col-sm-6 input-group">
+                            <input type="text" class="form-control" name="goodsName" id="goodsName" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">商品图片：</label>
+                        <div class="col-sm-6 input-group">
+                            <input type="file" id="goodsfile" name="photo" multiple />
+                            <input type="hidden" id="goodsPhoto"  />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">商品价格：</label>
+                        <div class="col-sm-6 input-group">
+                            <input type="text" class="form-control" name="goodsPrice" id="goodsPrice"  />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">商品库存：</label>
+                        <div class="col-sm-6 input-group">
+                            <input type="text" class="form-control" name="goodsStock" id="goodsStock"  />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label  class="col-sm-2 control-label">商品品牌：</label>
+                        <div class="col-sm-6 input-group">
+                            <select  class="form-control" name="brandId">
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group" id="selectDiv">
+                        <label  class="col-sm-2 control-label">分类：</label>
+
+                    </div>
+                </form>
+            </div>
+            <div style="text-align: center;">
+                <button type="button" class="btn btn-primary" onclick="addGoods();"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>添加</button>
+                <button type="reset" class="btn btn-success" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>重置</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="../js/bootstrap/jquery/jquery-3.3.1.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="../js/bootstrap/js/bootstrap.min.js"></script>
+<script src="../js/fileinput/js/fileinput.min.js" type="text/javascript"></script>
+<script src="../js/fileinput/js/locales/zh.js" type="text/javascript"></script>
+<script src="../js/bootbox/bootbox.min.js"></script>
+<script src="../js/bootstrapvalidator/js/bootstrapValidator.min.js"></script>
+<script src="../js/bootstrapvalidator/js/language/zh_CN.js"></script>
+<script>
+
+    $(function () {
+        queryBrandList();
+        queryCategoryList(1);
+        validator();
+    })
+
+
+
+    //新增商品
+    function addGoods(){
+        //定义一个校验器
+        var bootstrapValidator =$("#addGoodsForm").data('bootstrapValidator');
+        //执行校验
+        bootstrapValidator.validate();
+        //判断校验结果
+        if(!bootstrapValidator.isValid()){
+            return false;
+        }
+        var param = {};
+        param.goodsName = $("#goodsName").val();
+        param.goodsPhoto=$("#goodsPhoto").val();
+        param.goodsPrice=$("#goodsPrice").val();
+        param.goodsStock=$("#goodsStock").val();
+        param.brandId=$("[name='brandId']").val();
+        param.category1=$("select[name='goodsSelect']")[0].value;
+        param.category2=$("select[name='goodsSelect']")[1].value;
+        param.category3=$("select[name='goodsSelect']")[2].value;
+        param.cateInfo= $("input[name='cateName']")[0].value+"-"+$("input[name='cateName']")[1].value+"-"+$("input[name='cateName']")[2].value;
+
+        $.ajax({
+            url: "/goods/addGoods",
+            type: "post",
+            data: param,
+            success: function (result) {
+                console.info(result);
+                if (result.code == 200) {
+                    /*bootbox.alert({
+                        message: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>商品新增成功',
+                        size: "small",
+                        title: "温馨提示"
+
+                    })
+                    $(".modal-backdrop").css({"z-index":0});*/
+                    location.href="/list.html";
+                } else {
+                    bootbox.alert({
+                        message: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>商品新增失败',
+                        size: "small",
+                        title: "温馨提示"
+                    })
+                    $(".modal-backdrop").css({"z-index":0});
+                }
+            }
+        })
+    }
+    function validator(){
+        $("#addGoodsForm").bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                //普通字段不为空校验
+                goodsName: {
+                    message: '商品名验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '商品名不能为空'
+                        },
+                    }
+                },
+                //普通字段不为空校验
+                goodsPrice: {
+                    message: '商品价格验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '商品价格不能为空'
+                        },
+                    }
+                },
+                //普通字段不为空校验
+                goodsStock: {
+                    message: '商品库存验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '商品库存不能为空'
+                        },
+                    }
+                },
+                //普通字段不为空校验
+                brandId: {
+                    message: '商品品牌验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '商品品牌不能为空'
+                        },
+                    }
+                },
+                //普通字段不为空校验
+                goodsSelect: {
+                    message: '分类验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '商品分类不能为空'
+                        },
+                    }
+                },
+            }
+        });
+    }
+
+
+
+    //三级联动
+    function queryCategoryList(id,obj) {
+        $.ajax({
+            url:"/category/querycategoryListById?id="+id,
+            type:"get",
+            success:function(result){
+
+                if(result.code==200){
+                    if(obj){
+                        //清除后面所有的同级
+                        $(obj).parent().nextAll().remove();
+                        //向input框中赋值
+                        var index=obj.selectedIndex ;
+                        $(obj).prev().val(obj.options[index].text);
+                    }
+                    var resultselect = '<div class="col-md-2 form-group"><input type="hidden" name="cateName"/><select  class="form-control" name="goodsSelect" onchange="queryCategoryList(this.value,this);"><option value="-1">---请选择---</option>';
+                    var selectDate = result.data;
+                    if(selectDate.length==0){
+                        return;
+                    }
+                    for (var i=0;i<selectDate.length; i++){
+                        resultselect+="<option value='"+selectDate[i].id+"'>"+selectDate[i].categoryName+"</option>"
+                    }
+                    resultselect+="</select></div>";
+                    $("#selectDiv").append(resultselect);
+
+                }else{
+                    bootbox.alert({
+                        message: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>失败',
+                        size: "small",
+                        title: "温馨提示"
+                    })
+                    $(".modal-backdrop").css({"z-index":0});
+                }
+            }
+        })
+    }
+
+
+    //品牌的动态下拉框
+    function queryBrandList(){
+        //查询品牌
+        $.ajax({
+            url:"/goods/queryBrands",
+            type:"get",
+            data:"",
+            success:function (result) {
+                if(result.code==200){
+                    var brandList = result.data;
+                    $("[name='brandId']").html(' <option value="">--请选择--</option>');
+                    for (var i=0;i<brandList.length;i++){
+                        $("[name='brandId']").append('<option value="'+brandList[i].id+'">'+brandList[i].brandName+'</option>');
+                    }
+                }else{
+                    bootbox.alert({
+                        message: '<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>商品品牌展示异常',
+                        size: "small",
+                        title: "温馨提示"
+
+                    })
+                    $(".modal-backdrop").css({"z-index":0});
+                }
+            }
+        })
+    }//fileInput上传图片
+    $('#goodsfile').fileinput({
+        language: 'zh',
+        uploadUrl: '<%=request.getContextPath()%>/goods/uploadPhoto.jhtm',
+        allowedFileExtensions : [ 'jpg', 'png', 'gif' ],
+
+        enctype: 'multipart/form-data',
+        showUpload: false, //是否显示上传按钮
+        showRemove: false,
+        maxFileCount:1,
+    });
+    $("#goodsfile").on("fileuploaded", function (event, data, previewId, index) {
+        $("#goodsPhoto").val(data.response.data);
+    });
+
+</script>
+</body>
+</html>

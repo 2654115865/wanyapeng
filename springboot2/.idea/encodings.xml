@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://E:/LP项目/所有项目/registry-center" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-geteway" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-geteway" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/brand-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/brand-producer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/category2-producer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/product2-consumer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/product2-producer" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/registry-center" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/shop-core" charset="UTF-8" />
+  </component>
+</project>
