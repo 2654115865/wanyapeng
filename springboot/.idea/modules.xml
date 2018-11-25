@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/api-geteway/api-geteway.iml" filepath="$PROJECT_DIR$/api-geteway/api-geteway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/brand-api/brand-api.iml" filepath="$PROJECT_DIR$/brand-api/brand-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/brand-producer/brand-producer.iml" filepath="$PROJECT_DIR$/brand-producer/brand-producer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/category2-producer/category2-producer.iml" filepath="$PROJECT_DIR$/category2-producer/category2-producer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/product2-consumer/product2-consumer.iml" filepath="$PROJECT_DIR$/product2-consumer/product2-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/product2-producer/product2-producer.iml" filepath="$PROJECT_DIR$/product2-producer/product2-producer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/registry-center/registry-center.iml" filepath="$PROJECT_DIR$/registry-center/registry-center.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shop-core/shop-core.iml" filepath="$PROJECT_DIR$/shop-core/shop-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/springboot2.iml" filepath="$PROJECT_DIR$/.idea/springboot2.iml" />
+    </modules>
+  </component>
+</project>

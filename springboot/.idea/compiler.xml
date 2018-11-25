@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="api-geteway" />
+        <module name="brand-api" />
+        <module name="brand-producer" />
+        <module name="category2-producer" />
+        <module name="product2-consumer" />
+        <module name="product2-producer" />
+        <module name="registry-center" />
+        <module name="shop-core" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="api-geteway" target="1.8" />
+      <module name="brand-api" target="1.8" />
+      <module name="brand-producer" target="1.8" />
+      <module name="category2-producer" target="1.8" />
+      <module name="product2-consumer" target="1.8" />
+      <module name="product2-producer" target="1.8" />
+      <module name="registry-center" target="1.8" />
+      <module name="shop-core" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../js/fileinput/css/fileinput.css" media="all"rel="stylesheet" type="text/css" />
+    <link href="../js/bootstrapvalidator/css/bootstrapValidator.min.css" rel="stylesheet">
+    <title>商品列表</title>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    商品
+                </div>
+
+                <table id="productListDiv" class="table table-bordered">
+                    <tr>
+                        <th>商品名</th>
+                        <th>商品价格</th>
+                        <th>品牌名</th>
+                    </tr>
+
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="../js/bootstrap/jquery/jquery-3.3.1.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="../js/bootstrap/js/bootstrap.min.js"></script>
+<script src="../js/fileinput/js/fileinput.min.js" type="text/javascript"></script>
+<script src="../js/fileinput/js/locales/zh.js" type="text/javascript"></script>
+<script src="../js/bootbox/bootbox.min.js"></script>
+<script src="../js/bootstrapvalidator/js/bootstrapValidator.min.js"></script>
+<script src="../js/bootstrapvalidator/js/language/zh_CN.js"></script><script>
+    $(function() {
+        initProductList();
+    })
+
+    function initProductList() {
+        $.ajax({
+            type:"get",
+            url:"/goodsList",
+            success:function (result) {
+                if (result.code == 200) {
+                   var v_productList =  result.data;
+                   for (var i = 0; i < v_productList.length; i++) {
+                       var v_tr = "<tr>";
+                       v_tr+="<td>"+v_productList[i].goodsName+"</td>";
+                       v_tr+="<td>"+v_productList[i].goodsPrice+"</td>";
+                       v_tr+="<td>"+v_productList[i].brandName+"</td>";
+                       v_tr+="</tr>";
+                       $("#productListDiv").append(v_tr);
+                   }
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>
